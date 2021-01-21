@@ -68,19 +68,19 @@ void setup() {
 }
 
 void move() {
-  if (a && canMoveForward()) {
+  if (a && canMoveForward() && canMoveLeft() && canMoveRight() && canMoveBack()) {
     eyex -= cos(leftRightAngle+PI/2)*10;
     eyez -= sin(leftRightAngle+PI/2)*10;
   }
-  if (d && canMoveForward()) {
+  if (d && canMoveForward() && canMoveLeft() && canMoveRight() && canMoveBack()) {
     eyex += cos(leftRightAngle+PI/2)*10;
     eyez += sin(leftRightAngle+PI/2)*10;
   }
-  if (w && canMoveForward()) {
+  if (w && canMoveForward() && canMoveLeft() && canMoveRight() && canMoveBack()) {
     eyez += sin(leftRightAngle)*10;
     eyex += cos(leftRightAngle)*10;
   }
-  if (s && canMoveForward()) {
+  if (s && canMoveForward() && canMoveLeft() && canMoveRight() && canMoveBack()) {
     eyez -= sin(leftRightAngle)*10;
     eyex -= cos(leftRightAngle)*10;
   }
@@ -291,6 +291,99 @@ boolean canMoveForward() {
 
   return map.get(mapx, mapy) == white && map.get(leftmapx, leftmapy) == white && map.get(rightmapx, rightmapy) == white;
 }
+boolean canMoveLeft() {
+  float fwdx, fwdy, fwdz;
+  float leftx, lefty, leftz;
+  float rightx, righty, rightz;
+  int mapx, mapy; 
+  int leftmapx, leftmapy;
+  int rightmapx, rightmapy;
+  fwdx = eyex + cos(leftRightAngle+radians(90))*200; 
+  fwdy = eyey;
+  fwdz = eyez + sin(leftRightAngle+radians(90))*200;
+
+  leftx = eyex + cos(leftRightAngle+radians(20)+radians(90))*200; 
+  lefty = eyey;
+  leftz = eyez + sin(leftRightAngle+radians(20)+radians(90))*200;
+
+  rightx = eyex + cos(leftRightAngle-radians(20)+radians(90))*200; 
+  righty = eyey;
+  rightz = eyez + sin(leftRightAngle-radians(20)+radians(90))*200;
+
+  mapx = (int)(fwdx+2000)/gridSize;
+  mapy = (int)(fwdz+2000)/gridSize;
+
+  leftmapx = (int)(leftx+2000)/gridSize;
+  leftmapy = (int)(leftz+2000)/gridSize;
+
+  rightmapx = (int)(rightx+2000)/gridSize;
+  rightmapy = (int)(rightz+2000)/gridSize;
+
+  return map.get(mapx, mapy) == white && map.get(leftmapx, leftmapy) == white && map.get(rightmapx, rightmapy) == white;
+}
+boolean canMoveRight() {
+  float fwdx, fwdy, fwdz;
+  float leftx, lefty, leftz;
+  float rightx, righty, rightz;
+  int mapx, mapy; 
+  int leftmapx, leftmapy;
+  int rightmapx, rightmapy;
+  fwdx = eyex + cos(leftRightAngle-radians(90))*200; 
+  fwdy = eyey;
+  fwdz = eyez + sin(leftRightAngle-radians(90))*200;
+
+  leftx = eyex + cos(leftRightAngle+radians(20)-radians(90))*200; 
+  lefty = eyey;
+  leftz = eyez + sin(leftRightAngle+radians(20)-radians(90))*200;
+
+  rightx = eyex + cos(leftRightAngle-radians(20-radians(90)))*200; 
+  righty = eyey;
+  rightz = eyez + sin(leftRightAngle-radians(20)-radians(90))*200;
+
+  mapx = (int)(fwdx+2000)/gridSize;
+  mapy = (int)(fwdz+2000)/gridSize;
+
+  leftmapx = (int)(leftx+2000)/gridSize;
+  leftmapy = (int)(leftz+2000)/gridSize;
+
+  rightmapx = (int)(rightx+2000)/gridSize;
+  rightmapy = (int)(rightz+2000)/gridSize;
+
+  return map.get(mapx, mapy) == white && map.get(leftmapx, leftmapy) == white && map.get(rightmapx, rightmapy) == white;
+}
+
+boolean canMoveBack() {
+  float fwdx, fwdy, fwdz;
+  float leftx, lefty, leftz;
+  float rightx, righty, rightz;
+  int mapx, mapy; 
+  int leftmapx, leftmapy;
+  int rightmapx, rightmapy;
+  fwdx = eyex + cos(leftRightAngle-radians(180))*200; 
+  fwdy = eyey;
+  fwdz = eyez + sin(leftRightAngle-radians(180))*200;
+
+  leftx = eyex + cos(leftRightAngle+radians(20)-radians(180))*200; 
+  lefty = eyey;
+  leftz = eyez + sin(leftRightAngle+radians(20)-radians(180))*200;
+
+  rightx = eyex + cos(leftRightAngle-radians(20)-radians(180))*200; 
+  righty = eyey;
+  rightz = eyez + sin(leftRightAngle-radians(20)-radians(180))*200;
+
+  mapx = (int)(fwdx+2000)/gridSize;
+  mapy = (int)(fwdz+2000)/gridSize;
+
+  leftmapx = (int)(leftx+2000)/gridSize;
+  leftmapy = (int)(leftz+2000)/gridSize;
+
+  rightmapx = (int)(rightx+2000)/gridSize;
+  rightmapy = (int)(rightz+2000)/gridSize;
+
+  return map.get(mapx, mapy) == white && map.get(leftmapx, leftmapy) == white && map.get(rightmapx, rightmapy) == white;
+}
+
+
 
 void drawAxes(int start, int end, int uplevel, int downlevel, int gap) {
   stroke(255); 
